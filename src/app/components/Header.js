@@ -10,14 +10,16 @@ export default function Header() {
                 {/* Empty div to push nav links right if no logo */}
 
                 <ul className="flex space-x-6 sm:space-x-8">
-                    <li><Link href="/"
-                              className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Home</Link>
+                    <li><Link href="/#hero"
+                              className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2 mix-blend-difference">Home</Link>
                     </li>
                     <li><Link href="/#projects"
                               className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Projects</Link>
                     </li>
                     {/* Add Blog and Contact later if needed */}
-                    {/* <li><Link href="/blog" className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Blog</Link></li> */}
+                    <li>
+                        <Link href="/#bloglist" className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Blog</Link>
+                    </li>
                     {/* <li><Link href="/contact" className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Contact</Link></li> */}
                 </ul>
             </nav>

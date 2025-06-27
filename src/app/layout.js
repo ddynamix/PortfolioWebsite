@@ -1,21 +1,23 @@
-import {Inter} from 'next/font/google';
 import './globals.css';
-import Header from './components/Header'; // Import the Header
+import { Inter } from 'next/font/google';
+import Header from './components/Header';
+import ApolloClientProvider from './components/ApolloProvider';
 
-const inter = Inter({subsets: ['latin']});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-    title: 'Tyler Steptoe', // Adjust title
-    description: 'Portfolio of Tyler Steptoe, a software developer based in Toronto.', // Adjust description
+    title: 'Tyler Steptoe',
+    description: 'Portfolio of Tyler Steptoe, a software developer based in Toronto.',
 };
 
-export default function RootLayout({children}) {
+export default function RootLayout({ children }) {
     return (
-        <html lang="en" className="scroll-smooth"> {/* Add scroll-smooth here */}
+        <html lang="en" className="scroll-smooth">
         <body className={`${inter.className} bg-white text-gray-900`}>
-        <Header/> {/* Render the Header here, outside the main content */}
-        <main>{children}</main>
-        {/* You could add a Footer component here later */}
+        <ApolloClientProvider>
+            <Header />
+            <main>{children}</main>
+        </ApolloClientProvider>
         </body>
         </html>
     );

@@ -17,7 +17,7 @@ export default function Hero() {
                 transition={{duration: 0.6, ease: [0.65, 0, 0.35, 1]}}
             >
                 {/* Hero Section */}
-                <section className="w-screen h-full">
+                <section id="hero" className="w-screen h-full">
                     <section className="min-h-screen flex flex-col items-center justify-center pt-20 md:pt-0 bg-white">
                         <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-8 md:gap-16">
 
