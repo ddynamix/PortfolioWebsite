@@ -12,11 +12,19 @@
     "@apollo/client": "^3.13.8",
     "@react-three/drei": "^10.0.5",
     "@react-three/fiber": "^9.1.1",
+    "@sanity/client": "^7.7.0",
+    "@sanity/icons": "^3.7.4",
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^3.99.0",
     "framer-motion": "^12.6.2",
     "graphql": "^16.10.0",
     "next": "15.2.4",
+    "next-sanity": "^9.12.3",
+    "next-sanity-image": "^6.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sanity": "^3.99.0",
+    "styled-components": "^6.1.19",
     "three": "^0.175.0"
   },
   "devDependencies": {
@@ -24,6 +32,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "typescript": "5.8.3"
   }
 }
