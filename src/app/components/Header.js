@@ -1,13 +1,30 @@
+'use client';
+
 import Link from 'next/link';
+import {useSection} from './SectionContext';
+import {motion, AnimatePresence} from 'framer-motion';
 
 export default function Header() {
+    const {currentSection} = useSection();
+
     return (
         <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xs bg-transparent">
-            <nav className="container mx-auto px-6 py-5 flex justify-between items-center">
-                {/* Optional: Add a Logo or Name on the left if desired */}
-                {/* <Link href="/" className="text-xl font-bold">Tyler Steptoe</Link> */}
+            <nav className="container mx-auto pl-2 pr-6 py-5 flex justify-between items-center">
+                <AnimatePresence>
+                    {currentSection !== 'hero' && (
+                        <motion.div
+                            key="sliding-element"
+                            initial={{y: -50, opacity: 0}}
+                            animate={{y: 0, opacity: 1}}
+                            exit={{y: -50, opacity: 0}}
+                            transition={{duration: 0.4, ease: 'easeInOut'}}
+                            className="top-0 left-0 w-full"
+                        >
+                            <Link href="/" className="text-4xl font-extralight font-serif">Tyler Steptoe</Link>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
                 <div></div>
-                {/* Empty div to push nav links right if no logo */}
 
                 <ul className="flex space-x-6 sm:space-x-8">
                     <li><Link href="/#hero"
@@ -16,11 +33,14 @@ export default function Header() {
                     <li><Link href="/#projects"
                               className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Projects</Link>
                     </li>
-                    {/* Add Blog and Contact later if needed */}
                     <li>
-                        <Link href="/#bloglist" className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Blog</Link>
+                        <Link href="/#bloglist"
+                              className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Blog</Link>
                     </li>
-                    {/* <li><Link href="/contact" className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Contact</Link></li> */}
+                     <li>
+                         <Link href="/#contact"
+                               className="text-gray-700 hover:text-black hover:underline underline-offset-4 decoration-2">Contact</Link>
+                     </li>
                 </ul>
             </nav>
         </header>

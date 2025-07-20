@@ -2,7 +2,6 @@ import { groq } from "next-sanity";
 
 // Get all posts
 export const postsQuery = groq`*[_type == "post"] {
-      _createdAt,
       title,
       slug,
       mainImage,
@@ -41,4 +40,31 @@ export const projectsQuery = groq`*[_type == "project"] {
       projectLogo,
       projectgallery[],
       "imageURL": splashImage.asset->url
+  }`;
+
+// Get a single project by its slug
+export const projectQuery = groq`*[_type == "project" && slug.current == $slug][0]{ 
+      _id,
+      title,
+      slug,
+      summary,
+      award,
+      wonAward,
+      description,
+      context,
+      link,
+      github,
+      collaborators,
+      splashImage,
+      projectLogo,
+      "gallery": gallery[]{
+        "url": asset->url,
+        alt
+      },
+      "imageURL": splashImage.asset->url
+  }`;
+
+// Get all project slugs
+export const projectPathsQuery = groq`*[_type == "project" && defined(slug.current)][]{
+    "params": { "slug": slug.current }
   }`;

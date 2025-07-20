@@ -1,5 +1,8 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+import useSectionObserver from './UseSectionObserver';
 
 function getReadingTime(blocks) {
     if (!blocks || !Array.isArray(blocks)) return "1 minute";
@@ -19,12 +22,14 @@ function getReadingTime(blocks) {
 
 
 const BlogList = ({posts = []}) => {
+    const ref = useSectionObserver('bloglist');
+
     const convertDate = (date) => {
         return new Date(date).toLocaleDateString("en-GB", {day: "numeric", month: "short", year: "numeric"})
     }
 
     return (
-        <section id="bloglist" className="bg-slate-950 text-gray-100 px-6 md:px-20 py-20 min-h-screen">
+        <section ref={ref} id="bloglist" className="bg-slate-950 text-gray-100 px-6 md:px-20 py-20 min-h-screen">
             <h2 className="text-4xl md:text-5xl font-serif mb-6 border-b border-gray-700 pb-2">
                 Here’s what’s been going on with me.
             </h2>
