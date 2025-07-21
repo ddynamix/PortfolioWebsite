@@ -20,7 +20,7 @@ export default function Header() {
                             transition={{duration: 0.4, ease: 'easeInOut'}}
                             className="top-0 left-0 w-full"
                         >
-                            <Link href="/" className="text-4xl font-extralight font-serif">Tyler Steptoe</Link>
+                            <Link href="/" className="text-3xl font-extralight font-serif">Tyler Steptoe</Link>
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -30,7 +30,7 @@ export default function Header() {
                     <li>
                         <Link
                             href="/#hero"
-                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:text-black hover:underline underline-offset-4 decoration-2`}
+                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:underline underline-offset-4 decoration-2 decoration-[#0011FF]`}
                         >
                             Home
                         </Link>
@@ -38,7 +38,7 @@ export default function Header() {
                     <li>
                         <Link
                             href="/#projects"
-                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:text-black hover:underline underline-offset-4 decoration-2`}
+                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:underline underline-offset-4 decoration-2 decoration-[#00E40F]`}
                         >
                             Projects
                         </Link>
@@ -46,7 +46,7 @@ export default function Header() {
                     <li>
                         <Link
                             href="/#bloglist"
-                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:text-black hover:underline underline-offset-4 decoration-2`}
+                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:underline underline-offset-4 decoration-2 decoration-[#FF0000]`}
                         >
                             Blog
                         </Link>
@@ -54,7 +54,7 @@ export default function Header() {
                     <li>
                         <Link
                             href="/#contact"
-                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:text-black hover:underline underline-offset-4 decoration-2`}
+                            className={`${currentSection !== 'hero' ? 'text-white' : 'text-gray-700'} hover:underline underline-offset-4 decoration-2 decoration-[#FFFF00]`}
                         >
                             Contact
                         </Link>

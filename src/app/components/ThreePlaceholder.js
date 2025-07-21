@@ -1,7 +1,7 @@
 'use client'; // Mark this as a Client Component
 
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Box } from '@react-three/drei';
+import { OrbitControls, Box, useGLTF } from '@react-three/drei';
 
 export default function ThreePlaceholder() {
     return (

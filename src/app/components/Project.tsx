@@ -22,7 +22,7 @@ const Project = ({project}: { project: SanityDocument }) => {
     const router = useRouter();
 
     const handleBack = () => {
-        router.back();
+        router.push("/#projects");
     };
 
     const galleryImages = project.gallery && project.gallery.length > 0

@@ -10,74 +10,80 @@ const ContactPage = () => {
     return (
         <section ref={ref} id={"contact"}>
             <div className="bg-background text-white min-h-screen flex flex-col justify-between">
-                <div className="mx-auto px-2 pt-32 grid grid-cols-2 gap-8">
+                <div className="mx-auto px-2 pt-32 grid grid-cols-2 gap-8 max-w-4/5">
 
                     {/* Left Side */}
-                    <div className={"text-right mr-10 space-y-10 mt-6"}>
-                        <p className="text-4xl font-bold">I’m open to chat!</p>
-                        <p>
-                            <a href="mailto:tfsteptoe@gmail.com" className="underline text-3xl">
-                                tfsteptoe@gmail.com
-                            </a>
+                    <div className={"flex flex-col text-left mr-10 space-y-10 mt-20"}>
+                        <p className="text-3xl font-bold font-serif">I’m open to chat!</p>
+                        <p className="text-xl">
+                            If you're interested in any of my projects, have any questions about me, or want to reach
+                            out for any other reason, please feel free to leave a message! I'll respond within a day :)
                         </p>
-                        <p className="text-4xl">647-804-0076</p>
-                        <p>
-                            <a href="/TylerSteptoe_SoftwareResumeMarch2025.pdf" className="underline text-3xl">
-                                résumé
-                            </a>
-                        </p>
+                        <div className="flex space-x-9 mt-20 text-gray-400">
+                            <p className="text-xl">647-804-0076</p>
+                            <p>
+                                <a href="mailto:tfsteptoe@gmail.com" className="underline text-xl">
+                                    tfsteptoe@gmail.com
+                                </a>
+                            </p>
+                            <p>
+                                <a href="/TylerSteptoe_SoftwareResumeMarch2025.pdf" className="underline text-xl">
+                                    résumé
+                                </a>
+                            </p>
+                        </div>
                     </div>
 
                     {/* Right Side - Form */}
                     <form
                         action="https://formspree.io/f/mnnzjgvq"
                         method="POST"
-                        className="flex flex-col space-y-3 w-[130%]"
+                        className="flex flex-col space-y-3"
                     >
                         <div>
-                            <label htmlFor="email" className="text-sm lowercase">
-                                your email
+                            <label htmlFor="email" className="text-sm">
+                                Your Email
                             </label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
                                 required
-                                className="w-full bg-black border-2 border-gray-400 px-4 py-2"
+                                className="w-full bg-black border-2 border-gray-400 px-4 py-2 rounded-xl mt-1"
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="subject" className="text-sm lowercase">
-                                subject
+                            <label htmlFor="subject" className="text-sm">
+                                Subject
                             </label>
                             <input
                                 type="text"
                                 id="subject"
                                 name="subject"
                                 required
-                                className="w-full bg-black border-2 border-gray-400 px-4 py-2"
+                                className="w-full bg-black border-2 border-gray-400 px-4 py-2 rounded-xl mt-1"
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="message" className="text-sm lowercase">
-                                message
+                            <label htmlFor="message" className="text-sm">
+                                Message
                             </label>
                             <textarea
                                 id="message"
                                 name="message"
                                 rows="10"
                                 required
-                                className="w-full bg-black border-2 border-gray-400 px-4 py-2"
+                                className="w-full bg-black border-2 border-gray-400 px-4 py-2 rounded-xl mt-1"
                             ></textarea>
                         </div>
 
                         <button
                             type="submit"
-                            className="bg-cyan-400 text-black font-semibold py-2 px-4 mt-2 flex items-center justify-center hover:bg-cyan-500 hover:cursor-pointer"
+                            className="bg-cyan-400 text-black font-semibold py-2 px-4 mt-2 flex items-center justify-center hover:bg-cyan-500 hover:cursor-pointer rounded-xl mt-1"
                         >
-                            send
+                            Send
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-4 w-4 ml-2"
@@ -154,10 +160,6 @@ const ContactPage = () => {
                             />
                         </a>
                     </div>
-
-                    <p className="text-center text-sm mt-4">
-                        Website created with NextJS and Sanity.io
-                    </p>
                 </div>
             </div>
         </section>

@@ -3,8 +3,11 @@
 import {useState} from "react";
 import {motion} from "framer-motion";
 import Link from 'next/link';
-import ThreePlaceholder from './ThreePlaceholder'; // Import the placeholder
 import useSectionObserver from './UseSectionObserver';
+import dynamic from 'next/dynamic';
+import Scene from './scene';
+
+// const Model = dynamic(() => import('./Model'), {ssr: false});
 
 export default function Hero() {
     const ref = useSectionObserver('hero');
@@ -20,48 +23,44 @@ export default function Hero() {
                     animate={{x: showAbout ? "-100vw" : "0vw"}}
                     transition={{duration: 0.6, ease: [0.65, 0, 0.35, 1]}}
                 >
-                    {/* Hero Section */}
-                    <section id="hero" className="w-screen h-full">
-                        <section
-                            className="min-h-screen flex flex-col items-center justify-center pt-20 md:pt-0 bg-white">
-                            <div
-                                className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-8 md:gap-16">
 
-                                {/* Left Side: Text Content */}
-                                <div className="md:w-1/2 text-center md:text-left">
-                                    <p className="text-lg text-black mb-10">Hello, my name is</p>
-                                    <h1 className="text-6xl sm:text-7xl md:text-9xl font-serif font-bold text-black leading-tight mb-0">
-                                        Tyler
-                                    </h1>
-                                    <h1 className="text-6xl sm:text-7xl md:text-9xl font-serif font-bold text-black leading-tight mb-16">
-                                        Steptoe
-                                    </h1>
-                                    <p className="text-base sm:text-lg text-black mb-8 max-w-md mx-auto md:mx-0 cursor-pointer hover:underline"
-                                       onClick={() => setShowAbout(true)}>
-                                        I am a software developer based in Toronto. I love Hackathons. I&apos;m very
-                                        passionate about
-                                        design. &gt;
-                                    </p>
-                                </div>
-                                {/* Right Side: ThreeJS Content */}
-                                <div className="flex flex-col md:w-1/2 w-full h-64 md:h-96 items-center">
-                                    <ThreePlaceholder/>
-                                    <div
-                                        className="flex flex-col sm:flex-row justify-center md:justify-end gap-4 w-full">
-                                        <a
-                                            href="/TylerSteptoe_SoftwareResumeMarch2025.pdf"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-gray-800 hover:text-black underline font-serif underline-offset-4 text-3xl"
-                                        >
-                                            résumé
-                                        </a>
-                                    </div>
-                                </div>
+                    {/* Hero Section */}
+                    <section id="hero" className="w-screen h-full flex flex-col items-center justify-between pt-30 bg-white">
+                        <div className="flex flex-row items-center justify-between gap-30">
+
+                            {/* Left Side: Text Content */}
+                            <div className="text-left">
+                                <p className="text-lg text-black mb-10">Hello, my name is</p>
+                                <h1 className="text-9xl font-serif font-bold text-black leading-tight">
+                                    Tyler
+                                </h1>
+                                <h1 className="text-9xl font-serif font-bold text-black leading-tight">
+                                    Steptoe
+                                </h1>
                             </div>
 
-                            {/* "See Projects" Button Below Main Content (optional placement) */}
-                        </section>
+                            {/* Right Side: ThreeJS Content */}
+                            <div className="flex w-full h-full items-center">
+                                <Scene/>
+                            </div>
+
+                        </div>
+
+                        <div className="flex w-full items-end justify-between mb-35 px-20">
+                            <p className="text-lg text-black max-w-md cursor-pointer hover:underline"
+                               onClick={() => setShowAbout(true)}>
+                                I am a software developer based in Toronto. I love Hackathons, design, and
+                                creating new things. &gt;
+                            </p>
+                            <a
+                                href="/TylerSteptoe_SoftwareResumeMarch2025.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-black hover:underline font-serif underline-offset-4 text-3xl"
+                            >
+                                résumé
+                            </a>
+                        </div>
                     </section>
 
                     {/* About Me Section */}
