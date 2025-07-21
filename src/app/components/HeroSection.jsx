@@ -5,9 +5,9 @@ import {motion} from "framer-motion";
 import Link from 'next/link';
 import useSectionObserver from './UseSectionObserver';
 import dynamic from 'next/dynamic';
-import Scene from './scene';
 
-// const Model = dynamic(() => import('./Model'), {ssr: false});
+import Scene from './Scene';
+// const Scene = dynamic(() => import('./Scene'), {ssr: false});
 
 export default function Hero() {
     const ref = useSectionObserver('hero');
@@ -25,11 +25,12 @@ export default function Hero() {
                 >
 
                     {/* Hero Section */}
-                    <section id="hero" className="w-screen h-full flex flex-col items-center justify-between pt-30 bg-white">
-                        <div className="flex flex-row items-center justify-between gap-30">
+                    <section id="hero" className="w-screen h-full flex flex-col justify-between pt-30 bg-white">
+
+                        <div className="flex flex-row justify-between px-20">
 
                             {/* Left Side: Text Content */}
-                            <div className="text-left">
+                            <div className="text-left flex flex-col">
                                 <p className="text-lg text-black mb-10">Hello, my name is</p>
                                 <h1 className="text-9xl font-serif font-bold text-black leading-tight">
                                     Tyler
@@ -40,7 +41,7 @@ export default function Hero() {
                             </div>
 
                             {/* Right Side: ThreeJS Content */}
-                            <div className="flex w-full h-full items-center">
+                            <div className="flex w-[60%] h-full items-center -mr-12 pt-16">
                                 <Scene/>
                             </div>
 

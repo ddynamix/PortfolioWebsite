@@ -8,22 +8,24 @@ export default function Header() {
     const {currentSection} = useSection();
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xs bg-transparent">
+        <header className="fixed top-0 left-0 right-0 z-50 glassHeader backdrop-blur-md">
             <nav className="container mx-auto pl-2 pr-6 py-5 flex justify-between items-center">
-                <AnimatePresence>
-                    {currentSection !== 'hero' && (
-                        <motion.div
-                            key="sliding-element"
-                            initial={{y: -50, opacity: 0}}
-                            animate={{y: 0, opacity: 1}}
-                            exit={{y: -50, opacity: 0}}
-                            transition={{duration: 0.4, ease: 'easeInOut'}}
-                            className="top-0 left-0 w-full"
-                        >
-                            <Link href="/" className="text-3xl font-extralight font-serif">Tyler Steptoe</Link>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                <div className="relative h-6">
+                    <AnimatePresence>
+                        {currentSection !== 'hero' && (
+                            <motion.div
+                                key="sliding-element"
+                                initial={{ y: -50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -50, opacity: 0 }}
+                                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                className="top-0 left-0 w-full -mt-2"
+                            >
+                                <Link href="/" className="text-3xl font-extralight font-serif">Tyler Steptoe</Link>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
                 <div></div>
 
                 <ul className="flex space-x-6 sm:space-x-8">

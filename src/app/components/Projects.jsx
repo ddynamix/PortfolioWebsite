@@ -20,7 +20,7 @@ const Projects = ({projects = []}) => {
     return (
         <section id="projects" className="py-20 bg-background min-h-screen">
             <div className="container mx-auto px-6">
-                <h2 className="text-3xl font-serif text-center mb-12">My Projects</h2>
+                <h2 className="text-3xl font-serif text-center mb-12 mt-3">My Projects</h2>
 
                 <div className="space-y-6">
                     {projects.map((proj) => (

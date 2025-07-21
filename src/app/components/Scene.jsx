@@ -8,8 +8,8 @@ export default function Scene() {
     return (
         <Canvas>
             <Model/>
-            <directionalLight position={[0, 2, 3]} intensity={3}/>
-            <Environment preset="sunset"/>
+            <directionalLight position={[0, 2, 0]} intensity={4}/>
+            <Environment preset="studio"/>
         </Canvas>
     )
 }
