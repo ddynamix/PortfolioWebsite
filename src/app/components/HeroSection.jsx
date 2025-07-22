@@ -1,10 +1,11 @@
 'use client'; // Needed because ThreePlaceholder uses hooks
 
-import {useState} from "react";
+import {useState, useRef} from "react";
 import {motion} from "framer-motion";
 import Link from 'next/link';
 import useSectionObserver from './UseSectionObserver';
 import dynamic from 'next/dynamic';
+import TextType from './ReactBits/TextType';
 
 import Scene from './Scene';
 // const Scene = dynamic(() => import('./Scene'), {ssr: false});
@@ -15,8 +16,10 @@ export default function Hero() {
     const [showAbout, setShowAbout] = useState(false);
 
     return (
-        <section ref={ref}>
-            <div className="overflow-hidden w-screen h-screen">
+        <section ref={ref} className={'relative bg-white'}>
+
+            {/* Main content - positioned above Aurora */}
+            <div className="relative overflow-hidden w-screen h-screen z-10">
                 {/* Parent container that holds both sections */}
                 <motion.div
                     className="flex w-[200vw] h-full"
@@ -25,19 +28,22 @@ export default function Hero() {
                 >
 
                     {/* Hero Section */}
-                    <section id="hero" className="w-screen h-full flex flex-col justify-between pt-30 bg-white">
+                    <section id="hero" className="w-screen h-full flex flex-col justify-between pt-30">
 
                         <div className="flex flex-row justify-between px-20">
 
                             {/* Left Side: Text Content */}
-                            <div className="text-left flex flex-col">
+                            <div className="text-left flex flex-col h-full">
                                 <p className="text-lg text-black mb-10">Hello, my name is</p>
-                                <h1 className="text-9xl font-serif font-bold text-black leading-tight">
-                                    Tyler
-                                </h1>
-                                <h1 className="text-9xl font-serif font-bold text-black leading-tight">
-                                    Steptoe
-                                </h1>
+                                <TextType
+                                    text={["Tyler Steptoe"]}
+                                    typingSpeed={75}
+                                    pauseDuration={1500}
+                                    showCursor={true}
+                                    cursorCharacter="_"
+                                    className={"text-9xl font-serif font-bold text-black leading-tight"}
+                                    textColors={["#000000"]}
+                                />
                             </div>
 
                             {/* Right Side: ThreeJS Content */}
@@ -66,7 +72,7 @@ export default function Hero() {
 
                     {/* About Me Section */}
                     <section className="w-screen h-full">
-                        <section className="min-h-screen flex items-center justify-center bg-white">
+                        <section className="min-h-screen flex items-center justify-center">
                             <div className="container mx-auto px-4">
 
                                 {/* Back Arrow */}

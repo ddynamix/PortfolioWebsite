@@ -7,6 +7,7 @@ import {SanityDocument} from "@sanity/client";
 import {PortableText} from "@portabletext/react";
 import {client} from "../../sanity/lib/client";
 import {useRouter} from "next/navigation";
+import ScrollFloat from './ReactBits/ScrollFloat';
 
 const builder = imageUrlBuilder(client);
 
@@ -20,7 +21,18 @@ const Projects = ({projects = []}) => {
     return (
         <section id="projects" className="py-20 bg-background min-h-screen">
             <div className="container mx-auto px-6">
-                <h2 className="text-3xl font-serif text-center mb-12 mt-3">My Projects</h2>
+                {/*<h2 className="text-3xl font-serif text-center mb-12 mt-3">My Projects</h2>*/}
+                <ScrollFloat
+                    animationDuration={1}
+                    ease='back.inOut(2)'
+                    scrollStart='center bottom+=50%'
+                    scrollEnd='bottom bottom-=40%'
+                    stagger={0.03}
+                    containerClassName={"w-full text-center"}
+                    textClassName={"text-3xl font-serif text-center mb-12 mt-3"}
+                >
+                    My Projects
+                </ScrollFloat>
 
                 <div className="space-y-6">
                     {projects.map((proj) => (
