@@ -52,15 +52,17 @@ const Projects = ({projects = []}) => {
                             {/* Content */}
                             <div className="relative z-10 m-6 rounded-xl">
                                 <div className="flex items-center justify-between">
-                                    {proj?.projectLogo ? (
-                                        <Image
-                                            src={builder.image(proj.projectLogo).url()}
-                                            alt={proj.title}
-                                            width={250}
-                                            height={250}
-                                            className="object-contain imageShadow"
-                                        />
-                                    ) : null}
+                                    <div className="h-20 w-60 flex items-center justify-center">
+                                        {proj?.projectLogo ? (
+                                            <Image
+                                                src={builder.image(proj.projectLogo).url()}
+                                                alt={proj.title}
+                                                width={250}
+                                                height={250}
+                                                className="object-contain imageShadow"
+                                            />
+                                        ) : null}
+                                    </div>
 
                                     {proj?.wonAward ? (
                                         <div className="flex items-center justify-end">

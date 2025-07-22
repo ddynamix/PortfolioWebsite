@@ -3,6 +3,7 @@
 import React from "react";
 import useSectionObserver from './UseSectionObserver';
 import Image from "next/image";
+import ShinyText from "./ReactBits/ShinyText";
 
 const ContactPage = () => {
     const ref = useSectionObserver('contact');
@@ -81,17 +82,9 @@ const ContactPage = () => {
 
                         <button
                             type="submit"
-                            className="bg-cyan-400 text-black font-semibold py-2 px-4 mt-2 flex items-center justify-center hover:bg-cyan-500 hover:cursor-pointer rounded-xl mt-1"
+                            className="bg-gray-950 py-2 px-4 mt-2 flex items-center justify-center hover:bg-cyan-950 hover:cursor-pointer rounded-xl border-cyan-400 border-2"
                         >
-                            Send
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-4 w-4 ml-2"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path d="M2.01 21l20.99-9L2.01 3v7l15 2-15 2z"/>
-                            </svg>
+                            <ShinyText text="Send ⇨" disabled={false} speed={3} />
                         </button>
                     </form>
                 </div>

@@ -43,6 +43,7 @@ export default function Model(props) {
         bg: '#ffffff'
     })
 
+
     const { nodes: torusNodes, materials: torusMaterials } = useGLTF('torus.glb')
     const { nodes: helloNodes } = useGLTF('HelloWorld.glb');
 
