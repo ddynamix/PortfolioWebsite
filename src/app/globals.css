@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @tailwind utilities;
 
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -39,10 +40,26 @@ body {
   height: 100%;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 0 0 1rem 1rem;
-  box-shadow: inset -10px -8px 0px -11px rgba(255, 255, 255, 1),
-  inset 0px -9px 0px -8px rgba(255, 255, 255, 1);
+  box-shadow: inset 0px -9px 0px -8px rgba(255, 255, 255, 1);
   opacity: 0.6;
   z-index: -1;
   filter: drop-shadow(10px 4px 6px black) brightness(105%);
   pointer-events: none;
+}
+
+.glassCardBorder {
+  box-shadow:
+          /*inset 0px 2px 0px rgba(255, 255, 255, 0.3),    !* top inset *!*/
+          inset 0px -3px 0px rgba(255, 255, 255, 0.5),  /* bottom inset */
+          /*inset 5px 0px 0px rgba(255, 255, 255, 0.5),   !* left inset *!*/
+          inset -3px 0px 0px rgba(255, 255, 255, 0.5);  /* right inset */
+}
+
+
+.textDropShadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.imageShadow {
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }

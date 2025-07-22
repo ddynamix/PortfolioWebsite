@@ -55,16 +55,20 @@ const Project = ({project}: { project: SanityDocument }) => {
                         &larr; {/* Left arrow character */}
                     </p>
 
-                    {/* Project Logo */}
-                    {project?.projectLogo ? (
-                        <Image
-                            src={builder.image(project.projectLogo).url()}
-                            alt={project.title}
-                            width={250}
-                            height={250}
-                            className="object-contain"
-                        />
-                    ) : null}
+                    <div className="flex flex-row items-center justify-between">
+                        {/* Project Logo */}
+                        {project?.projectLogo ? (
+                            <Image
+                                src={builder.image(project.projectLogo).url()}
+                                alt={project.title}
+                                width={250}
+                                height={250}
+                                className="object-contain"
+                            />
+                        ) : null}
+
+                        <p className="text-lg font-sans text-gray-300">With {project.collaborators}</p>
+                    </div>
 
                     <hr className={"mt-2 mb-8 w-[102%] -ml-[1%]"}/>
 

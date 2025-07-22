@@ -67,7 +67,7 @@ export default function Hero() {
                     {/* About Me Section */}
                     <section className="w-screen h-full">
                         <section className="min-h-screen flex items-center justify-center bg-white">
-                            <div className="container mx-auto px-4 -mt-10">
+                            <div className="container mx-auto px-4">
 
                                 {/* Back Arrow */}
                                 <p className="inline-block mb-8 text-black cursor-pointer hover:underline text-2xl"

@@ -20,7 +20,7 @@ const ContactPage = () => {
                             out for any other reason, please feel free to leave a message! I'll respond within a day :)
                         </p>
                         <div className="flex space-x-9 mt-20 text-gray-400">
-                            <p className="text-xl">647-804-0076</p>
+                            <p className="text-xl"> +1 647-804-0076</p>
                             <p>
                                 <a href="mailto:tfsteptoe@gmail.com" className="underline text-xl">
                                     tfsteptoe@gmail.com
