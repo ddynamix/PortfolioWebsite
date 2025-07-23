@@ -30,6 +30,11 @@ export const project = defineType({
             type: 'string',
         }),
         defineField({
+            name: 'status',
+            title: 'Status',
+            type: 'string',
+        }),
+        defineField({
             name: 'splashImage',
             title: 'Splash Image',
             type: 'image',

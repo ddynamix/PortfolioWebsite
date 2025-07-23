@@ -9,49 +9,54 @@ import TextType from './ReactBits/TextType';
 import CircularText from './ReactBits/CircularText';
 
 import Scene from './Scene';
-// const Scene = dynamic(() => import('./Scene'), {ssr: false});
 
 export default function Hero() {
     const ref = useSectionObserver('hero');
-
     const [showAbout, setShowAbout] = useState(false);
 
     return (
         <section ref={ref} className={'relative bg-white'}>
-
-            {/* Main content - positioned above Aurora */}
             <div className="relative overflow-hidden w-screen h-screen z-10">
-                {/* Parent container that holds both sections */}
                 <motion.div
                     className="flex w-[200vw] h-full"
                     animate={{x: showAbout ? "-100vw" : "0vw"}}
                     transition={{duration: 0.6, ease: [0.65, 0, 0.35, 1]}}
                 >
-
-                    {/* Hero Section */}
                     <section id="hero" className="w-screen h-full flex flex-col justify-between pt-30">
-
                         <div className="flex flex-row justify-between px-20">
-
                             {/* Left Side: Text Content */}
                             <div className="text-left flex flex-col h-full">
                                 <p className="text-lg text-black mb-10">Hello! My name is</p>
-                                <TextType
-                                    text={["Tyler Steptoe"]}
-                                    typingSpeed={75}
-                                    pauseDuration={1500}
-                                    showCursor={true}
-                                    cursorCharacter="_"
-                                    className={"text-9xl font-serif font-bold text-black leading-tight"}
-                                    textColors={["#000000"]}
-                                />
+                                
+                                {/* Reserve space for full text */}
+                                <div className="relative">
+                                    {/* Invisible placeholder to reserve space */}
+                                    <div 
+                                        className="text-9xl font-serif font-bold text-transparent leading-tight"
+                                        aria-hidden="true"
+                                    >
+                                        Tyler Steptoe
+                                    </div>
+                                    
+                                    {/* Actual typing animation positioned absolutely */}
+                                    <div className="absolute top-0 left-0">
+                                        <TextType
+                                            text={["Tyler Steptoe"]}
+                                            typingSpeed={75}
+                                            pauseDuration={1500}
+                                            showCursor={true}
+                                            cursorCharacter="_"
+                                            className={"text-9xl font-serif font-bold text-black leading-tight"}
+                                            textColors={["#000000"]}
+                                        />
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Right Side: ThreeJS Content */}
                             <div className="flex w-[60%] h-full items-center -mr-12 pt-16">
                                 <Scene/>
                             </div>
-
                         </div>
 
                         <div className="flex w-full items-end justify-between mb-35 px-20">
@@ -71,7 +76,7 @@ export default function Hero() {
                         </div>
                     </section>
 
-                    {/* About Me Section */}
+                    {/* About Me Section - unchanged */}
                     <section className="w-screen h-full">
                         <section className="min-h-screen flex items-center justify-center">
                             <div className="container mx-auto px-4">
@@ -103,7 +108,8 @@ export default function Hero() {
                                                 I love all ends of programming and am always eager to learn more.
                                                 Hackathons are a particularly favourite pastime as they allow me to meet
                                                 equally as passionate developers and allow me to brainstorm, develop,
-                                                and pitch an idea that I&apos;ve had on my mind. Check out some of my
+                                                and pitch an idea that I&apos;ve had on my mind. Check out some of
+                                                my&nbsp;
                                                 <Link href="/#projects" className="text-blue-600 hover:underline">
                                                     projects on this website!
                                                 </Link>
@@ -119,7 +125,7 @@ export default function Hero() {
                                             </p>
                                             <p>
                                                 Other than tech, I&apos;m also very passionate about film and I&apos;m
-                                                doing a minor in Cinema Studies (check out my
+                                                doing a minor in Cinema Studies (check out my&nbsp;
                                                 <a
                                                     href="https://letterboxd.com/ddynamix/"
                                                     target="_blank"
@@ -127,16 +133,16 @@ export default function Hero() {
                                                     className="text-blue-600 hover:underline">
                                                     Letterboxd
                                                 </a>
-                                                if that&apos;s your kind of thing). As for experience, I&apos;ve worked
-                                                as
+                                                &nbsp;if that&apos;s your kind of thing). As for experience, I&apos;ve
+                                                worked as
                                                 a back-end AI intern for Parlay Games Inc., and am currently a data
                                                 scientist intern at Propel Holdings doing risk management. Feel free to
-                                                contact me for more details, and take a look at my
+                                                contact me for more details, and take a look at my&nbsp;
                                                 <a href="/resume.pdf"
                                                    target="_blank"
                                                    rel="noopener noreferrer"
                                                    className="text-blue-600 hover:underline">
-                                                    CV
+                                                     CV
                                                 </a>.
                                             </p>
                                             <blockquote

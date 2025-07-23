@@ -9,7 +9,7 @@ import {
     OrbitControls,
     Center,
 } from '@react-three/drei'
-import { useControls } from 'leva'
+import { useControls, Leva } from 'leva'
 import {useRef} from "react";
 
 
@@ -50,6 +50,9 @@ export default function Model(props) {
 
     return (
         <group scale={5}>
+            <Leva
+                hidden={true}
+            />
             <mesh ref={text} geometry={helloNodes.Text.geometry} position={[.1, 0, -1]} rotation={[90 * (Math.PI/180), 0, 0]}>
                 <meshStandardMaterial color="black" />
             </mesh>

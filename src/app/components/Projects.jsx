@@ -21,7 +21,6 @@ const Projects = ({projects = []}) => {
     return (
         <section id="projects" className="py-20 bg-background min-h-screen">
             <div className="container mx-auto px-6">
-                {/*<h2 className="text-3xl font-serif text-center mb-12 mt-3">My Projects</h2>*/}
                 <ScrollFloat
                     animationDuration={1}
                     ease='back.inOut(2)'
@@ -40,15 +39,25 @@ const Projects = ({projects = []}) => {
                             key={proj._id}
                             className="relative rounded-xl overflow-hidden group hover:shadow-lg hover:scale-[102%] transition cursor-pointer"
                             onClick={() => router.push(`/projects/${proj.slug.current}`)}
-                            style={{
-                                backgroundImage: `url(${builder.image(proj.splashImage).url()})`,
-                                backgroundRepeat: "no-repeat",
-                                backgroundSize: "cover",
-                                backgroundPositionY: "55%",
-                            }}
                         >
-                            <div
-                                className="absolute inset-0 bg-white/20 backdrop-blur-sm group-hover:bg-white/20 group-hover:backdrop-blur-lg transition duration-300 rounded-xl glassCardBorder"></div>
+                            {/* Background Image using Next.js Image */}
+                            <div className="absolute inset-0">
+                                <Image
+                                    src={builder.image(proj.splashImage).url()}
+                                    alt={proj.title}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                                    className="object-cover"
+                                    style={{
+                                        objectPosition: '50% 55%'
+                                    }}
+                                    priority={false}
+                                />
+                            </div>
+
+                            {/* Glass overlay */}
+                            <div className="absolute inset-0 bg-white/30 group-hover:bg-white/20 group-hover:backdrop-blur-lg transition duration-300 rounded-xl glassCardBorder"></div>
+                            
                             {/* Content */}
                             <div className="relative z-10 m-6 rounded-xl">
                                 <div className="flex items-center justify-between">
@@ -69,12 +78,21 @@ const Projects = ({projects = []}) => {
                                             <p className="text-white font-bold text-xl textDropShadow">{proj.award}</p>
                                             <span className="text-yellow-500 text-2xl ml-4">🏆</span>
                                         </div>
-                                    ) : null}
+                                    ) : (
+                                        <div className="flex items-center justify-end">
+                                            <p className="text-white font-bold text-xl textDropShadow">{proj.status}</p>
+                                            {proj.status === "Archived" && (
+                                                <span className="text-gray-400 text-2xl ml-4">🗃️</span>
+                                            )}
+                                            {proj.status === "In Development" && (
+                                                <span className="text-blue-400 text-2xl ml-4">🟢</span>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Hidden summary on hover */}
-                                <div
-                                    className="max-h-0 opacity-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-300">
+                                <div className="max-h-0 opacity-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-300">
                                     <div className="w-1/2 flex-auto ml-2">
                                         <p className="text-white font-bold text-xl textDropShadow">
                                             <br/>
@@ -86,6 +104,7 @@ const Projects = ({projects = []}) => {
                                             <a
                                                 href={proj.link}
                                                 className="text-blue-400 hover:underline textDropShadow"
+                                                onClick={(e) => e.stopPropagation()}
                                             >
                                                 Project Site →
                                             </a>
@@ -94,6 +113,7 @@ const Projects = ({projects = []}) => {
                                             <a
                                                 href={proj.github}
                                                 className="text-blue-400 hover:underline textDropShadow"
+                                                onClick={(e) => e.stopPropagation()}
                                             >
                                                 GitHub →
                                             </a>

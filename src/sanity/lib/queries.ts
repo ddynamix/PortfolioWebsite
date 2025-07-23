@@ -46,6 +46,7 @@ export const projectsQuery = groq`*[_type == "project"] {
       collaborators,
       splashImage,
       projectLogo,
+      status,
       projectgallery[],
       "imageURL": splashImage.asset->url
   }`;
@@ -65,6 +66,7 @@ export const projectQuery = groq`*[_type == "project" && slug.current == $slug][
       collaborators,
       splashImage,
       projectLogo,
+      status,
       "gallery": gallery[]{
         "url": asset->url,
         alt

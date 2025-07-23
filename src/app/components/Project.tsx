@@ -67,7 +67,9 @@ const Project = ({project}: { project: SanityDocument }) => {
                             />
                         ) : null}
 
-                        <p className="text-lg font-sans text-gray-300">With {project.collaborators}</p>
+                        {project?.collaborators ? (
+                            <p className="text-lg font-sans text-gray-300">With {project.collaborators}</p>
+                        ) : null}
                     </div>
 
                     <hr className={"mt-2 mb-8 w-[102%] -ml-[1%]"}/>
