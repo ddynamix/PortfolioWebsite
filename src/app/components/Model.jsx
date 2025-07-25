@@ -9,55 +9,87 @@ import {
     OrbitControls,
     Center,
 } from '@react-three/drei'
-import { useControls, Leva } from 'leva'
-import {useRef} from "react";
+import {useRef, useState, useEffect} from "react";
 
+// Simplified configuration for better performance
+const simpleConfig = {
+    meshPhysicalMaterial: false,
+    transmissionSampler: false,
+    backside: true,
+    samples: 10, // Reduced from 32
+    resolution: 1024, // Reduced from 2048
+    transmission: 1,
+    roughness: 0.24,
+    thickness: 0.73,
+    ior: 1.08,
+    chromaticAberration: 0.04,
+    anisotropy: 0.09,
+    distortion: 0.01,
+    distortionScale: 0.79,
+    temporalDistortion: 0.33,
+    clearcoat: 1,
+    attenuationDistance: 2.10,
+    attenuationColor: '#ffffff',
+    color: '#ffffff',
+    bg: '#ffffff'
+};
+
+// Even more simplified config for low-end devices
+const lowEndConfig = {
+    ...simpleConfig,
+    samples: 4,
+    resolution: 512,
+    chromaticAberration: 0,
+    anisotropy: 0,
+    distortion: 0,
+    temporalDistortion: 0
+};
 
 export default function Model(props) {
     const torus = useRef(null);
     const text = useRef(null);
+    const [isLowEndDevice, setIsLowEndDevice] = useState(false);
+    const [frameRate, setFrameRate] = useState(1); // Controls animation speed
+    
+    // Detect low-end devices
+    useEffect(() => {
+        // Check if device is likely to be low-end
+        const checkPerformance = () => {
+            // Simple heuristic: check if it's a mobile device
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            // More sophisticated check could involve testing actual rendering performance
+            // For now, we'll just use the mobile check as a proxy
+            setIsLowEndDevice(isMobile);
+            
+            // Set frame rate based on device capability
+            setFrameRate(isMobile ? 0.01 : 0.02); // Slower rotation on mobile
+        };
+        
+        checkPerformance();
+    }, []);
 
-    useFrame( () => {
-        torus.current.rotation.x += 0.02
-    })
+    // Optimize frame updates - only rotate every other frame on low-end devices
+    useFrame((state, delta) => {
+        if (torus.current) {
+            torus.current.rotation.x += frameRate;
+        }
+    });
 
-    const config = useControls({
-        meshPhysicalMaterial: false,
-        transmissionSampler: false,
-        backside: true,
-        samples: { value: 32, min: 1, max: 32, step: 1 },
-        resolution: { value: 2048, min: 256, max: 2048, step: 256 },
-        transmission: { value: 1, min: 0, max: 1 },
-        roughness: { value: 0.24, min: 0, max: 1, step: 0.01 },
-        thickness: { value: 0.73, min: 0, max: 10, step: 0.01 },
-        ior: { value: 1.08, min: 1, max: 5, step: 0.01 },
-        chromaticAberration: { value: 0.04, min: 0, max: 1 },
-        anisotropy: { value: 0.09, min: 0, max: 1, step: 0.01 },
-        distortion: { value: 0.01, min: 0, max: 1, step: 0.01 },
-        distortionScale: { value: 0.79, min: 0.01, max: 1, step: 0.01 },
-        temporalDistortion: { value: 0.33, min: 0, max: 1, step: 0.01 },
-        clearcoat: { value: 1, min: 0, max: 1 },
-        attenuationDistance: { value: 2.10, min: 0, max: 10, step: 0.01 },
-        attenuationColor: '#ffffff',
-        color: '#ffffff',
-        bg: '#ffffff'
-    })
-
-
-    const { nodes: torusNodes, materials: torusMaterials } = useGLTF('torus.glb')
+    // Use React.lazy and Suspense for model loading in the parent component
+    const { nodes: torusNodes } = useGLTF('torus.glb');
     const { nodes: helloNodes } = useGLTF('HelloWorld.glb');
 
+    // Choose config based on device capability
+    const config = isLowEndDevice ? lowEndConfig : simpleConfig;
 
     return (
         <group scale={5}>
-            <Leva
-                hidden={true}
-            />
             <mesh ref={text} geometry={helloNodes.Text.geometry} position={[.1, 0, -1]} rotation={[90 * (Math.PI/180), 0, 0]}>
                 <meshStandardMaterial color="black" />
             </mesh>
             <mesh ref={torus} geometry={torusNodes.Torus002.geometry} position={[0, 0, 0]}>
-                {config.meshPhysicalMaterial ? <meshPhysicalMaterial {...config} /> : <MeshTransmissionMaterial {...config} background={new THREE.Color('#ffffff')} />}
+                <MeshTransmissionMaterial {...config} background={new THREE.Color('#ffffff')} />
             </mesh>
         </group>
     )

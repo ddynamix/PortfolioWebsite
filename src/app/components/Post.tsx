@@ -41,26 +41,30 @@ const Post = ({post}: { post: SanityDocument }) => {
     const readingTime = getReadingTime(post.body);
 
     return (
-        <main className="flex flex-col max-w-[80%] mx-auto px-4 py-16 text-white mt-10">
+        <main className="flex flex-col mx-auto px-4 py-16 sm:py-10 text-white mt-10 max-w-4xl">
             {/* Back Arrow */}
             <p className="inline-block mb-4 text-white cursor-pointer hover:underline text-2xl"
                onClick={() => handleBack()}>
                 &larr; {/* Left arrow character */}
             </p>
 
-            <h1 className="text-3xl md:text-4xl font-serif border-gray-600 pb-2">
-                {post.title}
-            </h1>
+            {/* Headings */}
+            <div className="flex flex-col w-full text-center sm:text-left">
+                <h1 className="text-3xl font-serif pb-2">
+                    {post.title}
+                </h1>
 
-            <hr className={" border-gray-300"}/>
+                <hr className={" border-gray-300"}/>
 
-            <p className="text-sm text-white font-serif mt-2">
-                {date} | {category} | {readingTime}
-            </p>
+                <p className="text-sm text-white font-serif mt-2">
+                    {date} | {category} | {readingTime}
+                </p>
+            </div>
 
-            <div className={"flex flex-col space-y-4 w-[60%] justify-center mx-auto mt-5"}>
+            {/* Body */}
+            <div className="flex flex-col lg:max-w-[60%] md:max-w-[75%] sm:max-w-[80%] mx-auto mt-5">
                 {post?.mainImage && (
-                    <div className="flex justify-center my-8">
+                    <div className="justify-center my-8">
                         <Image
                             src={builder.image(post.mainImage).url()}
                             alt={post?.mainImage?.alt || ""}

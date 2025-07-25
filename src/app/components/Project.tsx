@@ -46,16 +46,16 @@ const Project = ({project}: { project: SanityDocument }) => {
 
     return (
         <section ref={ref}>
-            <div className="w-full min-h-screen bg-background text-white px-10 py-20">
-                <div className="max-w-7xl mx-auto mt-6">
+            <div className="w-full min-h-screen bg-background text-white px-4 sm:px-6 md:px-10 py-10 sm:py-20">
+                <div className="max-w-7xl mx-auto mt-8 sm:mt-6">
 
                     {/* Back Arrow */}
-                    <p className="inline-block mb-4 text-white cursor-pointer hover:underline text-2xl"
+                    <p className="inline-block mb-4 text-white cursor-pointer hover:underline text-3xl sm:text-2xl"
                        onClick={() => handleBack()}>
                         &larr; {/* Left arrow character */}
                     </p>
 
-                    <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-start items-center justify-between gap-4 sm:gap-0">
                         {/* Project Logo */}
                         {project?.projectLogo ? (
                             <Image
@@ -63,23 +63,26 @@ const Project = ({project}: { project: SanityDocument }) => {
                                 alt={project.title}
                                 width={250}
                                 height={250}
-                                className="object-contain"
+                                className="object-contain max-w-[200px] sm:max-w-[250px]"
+                                priority={true}
+                                loading="eager"
+                                quality={90}
                             />
                         ) : null}
 
                         {project?.collaborators ? (
-                            <p className="text-lg font-sans text-gray-300">With {project.collaborators}</p>
+                            <p className="text-base sm:text-lg font-sans text-gray-300 mt-1 sm:mt-2">With {project.collaborators}</p>
                         ) : null}
                     </div>
 
-                    <hr className={"mt-2 mb-8 w-[102%] -ml-[1%]"}/>
+                    <hr className={"mt-3 mb-6 sm:mb-8 w-full sm:w-[102%] sm:-ml-[1%]"}/>
 
-                    <div className={"flex flex-row space-x-8"}>
+                    <div className={"flex flex-col lg:flex-row lg:space-x-8 space-y-8 lg:space-y-0"}>
 
                         {/* Text portion */}
-                        <div className={"flex flex-col w-3/5"}>
+                        <div className={"flex flex-col w-full lg:w-3/5"}>
                             {/* Context & external link */}
-                            <p className="text-2xl text-gray-300 font-bold">
+                            <p className="text-xl sm:text-2xl text-gray-300 font-bold">
                                 Created during {project.context}
                             </p>
 
@@ -87,7 +90,7 @@ const Project = ({project}: { project: SanityDocument }) => {
                                 {/* Hackathon link if applicable */}
                                 {project.link && (
                                     <Link href={project.link} target="_blank" rel="noopener noreferrer"
-                                          className="text-sm text-gray-400 hover:underline mb-6 inline-block">
+                                          className="text-sm text-gray-400 hover:underline mb-4 sm:mb-6 inline-block">
                                         devpost ↗
                                     </Link>
                                 )}
@@ -95,7 +98,7 @@ const Project = ({project}: { project: SanityDocument }) => {
                                 {/* GitHub link */}
                                 {project.github && (
                                     <Link href={project.github} target="_blank" rel="noopener noreferrer"
-                                          className="text-sm text-gray-400 hover:underline mb-6 inline-block">
+                                          className="text-sm text-gray-400 hover:underline mb-4 sm:mb-6 inline-block">
                                         github ↗
                                     </Link>
                                 )}
@@ -103,16 +106,16 @@ const Project = ({project}: { project: SanityDocument }) => {
 
                             {/* Award section */}
                             {project.wonAward && (
-                                <div className="flex items-center mb-8">
-                                    <p className="text-2xl font-bold mr-2">{project.award}</p>
-                                    <span className="text-yellow-500 text-2xl">🏆</span>
+                                <div className="flex items-center mb-6 sm:mb-8">
+                                    <p className="text-xl sm:text-2xl font-bold mr-2">{project.award}</p>
+                                    <span className="text-yellow-500 text-xl sm:text-2xl">🏆</span>
                                 </div>
                             )}
 
                             {/* Description */}
                             <div className="flex flex-col">
                                 {project.description && (
-                                    <div className="prose">
+                                    <div className="prose prose-sm sm:prose">
                                         <PortableText value={project.description}/>
                                     </div>
                                 )}
@@ -120,25 +123,28 @@ const Project = ({project}: { project: SanityDocument }) => {
                         </div>
 
                         {/* Gallery carousel */}
-                        <div className="mt-16 flex flex-col items-center w-2/5">
+                        <div className="flex flex-col items-center w-full lg:w-2/5 mt-4 lg:mt-16">
                             {galleryImages.length > 0 && (
                                 <>
-                                    {/* Carousel container with fixed size and darker background */}
+                                    {/* Carousel container with responsive size and darker background */}
                                     <div
-                                        className="relative w-[400px] h-[400px] bg-black/20 rounded-lg overflow-hidden">
+                                        className="relative w-full max-w-[400px] aspect-square bg-black/20 rounded-lg overflow-hidden">
                                         <div
-                                            className="flex transition-transform duration-500 ease-in-out"
+                                            className="flex transition-transform duration-500 ease-in-out h-full"
                                             style={{transform: `translateX(-${currentIndex * 100}%)`}}
                                         >
                                             {galleryImages.map((img, idx) => (
                                                 <div key={idx}
-                                                     className="w-[400px] h-[400px] flex-shrink-0 flex items-center justify-center">
+                                                     className="w-full aspect-square flex-shrink-0 flex items-center justify-center">
                                                     <Image
                                                         src={img.url}
                                                         alt={img.alt}
                                                         width={380}
                                                         height={380}
-                                                        className="object-contain max-h-[380px] max-w-[380px]"
+                                                        className="object-contain max-h-[90%] max-w-[90%]"
+                                                        loading={idx === currentIndex ? "eager" : "lazy"}
+                                                        priority={idx === currentIndex}
+                                                        quality={idx === currentIndex ? 85 : 70}
                                                     />
                                                 </div>
                                             ))}

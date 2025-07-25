@@ -29,7 +29,7 @@ const BlogList = ({posts = []}) => {
     }
 
     return (
-        <section ref={ref} id="bloglist" className="bg-background text-gray-100 px-6 md:px-20 py-20 min-h-screen">
+        <section ref={ref} id="bloglist" className="bg-background text-gray-100 px-6 md:px-20 py-20">
             <h2 className="text-4xl md:text-5xl font-serif mb-6 border-b border-gray-700 pb-2">
                 Here’s what’s been going on with me.
             </h2>
@@ -43,9 +43,9 @@ const BlogList = ({posts = []}) => {
                     return (
                         <li
                             key={post._id}
-                            className="flex flex-col md:flex-row md:justify-between md:items-start"
+                            className="flex flex-row justify-between"
                         >
-                            <div>
+                            <div className="w-full">
                                 <Link href={`/posts/${post.slug.current}`}>
                                     <h3 className="text-2xl md:text-3xl font-serif hover:underline">
                                         {post.title}
@@ -56,7 +56,7 @@ const BlogList = ({posts = []}) => {
                                 </p>
                             </div>
 
-                            <span className="mt-2 md:mt-0 text-sm text-gray-400">
+                            <span className="mt-2 md:mt-0 text-sm text-gray-400 whitespace-nowrap">
                                 {readingTime}
                             </span>
                         </li>

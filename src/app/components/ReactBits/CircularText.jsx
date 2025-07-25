@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState, memo} from "react";
 import {motion, useAnimation, useMotionValue} from "framer-motion";
 
 const getRotationTransition = (duration, from, loop = true, direction = "clockwise") => ({
@@ -26,46 +26,78 @@ const CircularText = ({
                           onHover = "speedUp",
                           className = "",
                       }) => {
-    const letters = Array.from(text);
+    // Performance optimization: reduce the number of letters for low-performance devices
+    const [isLowPerformance, setIsLowPerformance] = useState(false);
+    
+    // Detect low-performance devices
+    useEffect(() => {
+        const checkPerformance = () => {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const isLowEnd = isMobile || window.innerWidth < 768;
+            setIsLowPerformance(isLowEnd);
+        };
+        
+        checkPerformance();
+    }, []);
+    
+    // For low-performance devices, reduce the number of letters by skipping asterisks
+    // and potentially reducing the text length
+    const optimizedText = isLowPerformance 
+        ? text.replace(/\*/g, '') // Remove asterisks
+        : text;
+        
+    // Further reduce text length for very low-end devices
+    const finalText = isLowPerformance && optimizedText.length > 12
+        ? optimizedText.substring(0, Math.ceil(optimizedText.length * 0.75))
+        : optimizedText;
+    
+    const letters = Array.from(finalText);
     const controls = useAnimation();
     const rotation = useMotionValue(0);
+    
+    // Adjust spin duration based on device performance
+    const adjustedSpinDuration = isLowPerformance ? spinDuration * 1.5 : spinDuration;
 
     useEffect(() => {
         const start = rotation.get();
         controls.start({
             rotate: start + (direction === "clockwise" ? 360 : -360),
             scale: 1,
-            transition: getTransition(spinDuration, start, direction),
+            transition: getTransition(adjustedSpinDuration, start, direction),
         });
-    }, [spinDuration, text, onHover, controls, rotation, direction]);
+    }, [adjustedSpinDuration, finalText, onHover, controls, rotation, direction]);
 
     const handleHoverStart = () => {
+        // Skip hover effects on low-performance devices to improve performance
+        if (isLowPerformance) return;
+        
         const start = rotation.get();
         if (!onHover) return;
 
         let transitionConfig;
         let scaleVal = 1;
 
+        // Simplified hover effects for better performance
         switch (onHover) {
             case "slowDown":
-                transitionConfig = getTransition(spinDuration * 2, start, direction);
+                transitionConfig = getTransition(adjustedSpinDuration * 1.5, start, direction);
                 break;
             case "speedUp":
-                transitionConfig = getTransition(spinDuration / 4, start, direction);
+                transitionConfig = getTransition(adjustedSpinDuration / 3, start, direction);
                 break;
             case "pause":
                 transitionConfig = {
-                    rotate: {type: "spring", damping: 20, stiffness: 300},
-                    scale: {type: "spring", damping: 20, stiffness: 300},
+                    rotate: {type: "spring", damping: 15, stiffness: 200}, // Less complex spring
+                    scale: {type: "spring", damping: 15, stiffness: 200},
                 };
                 scaleVal = 1;
                 break;
             case "goBonkers":
-                transitionConfig = getTransition(spinDuration / 20, start, direction);
-                scaleVal = 0.8;
+                transitionConfig = getTransition(adjustedSpinDuration / 10, start, direction);
+                scaleVal = 0.9; // Less extreme scale change
                 break;
             default:
-                transitionConfig = getTransition(spinDuration, start, direction);
+                transitionConfig = getTransition(adjustedSpinDuration, start, direction);
         }
 
         controls.start({
@@ -76,11 +108,14 @@ const CircularText = ({
     };
 
     const handleHoverEnd = () => {
+        // Skip hover end effects on low-performance devices
+        if (isLowPerformance) return;
+        
         const start = rotation.get();
         controls.start({
             rotate: start + (direction === "clockwise" ? 360 : -360),
             scale: 1,
-            transition: getTransition(spinDuration, start, direction),
+            transition: getTransition(adjustedSpinDuration, start, direction),
         });
     };
 
@@ -114,4 +149,5 @@ const CircularText = ({
     );
 };
 
-export default CircularText;
+// Export memoized component to prevent unnecessary re-renders
+export default memo(CircularText);

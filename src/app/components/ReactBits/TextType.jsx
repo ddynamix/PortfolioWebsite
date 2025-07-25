@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, createElement } from "react";
+import { useEffect, useRef, useState, createElement, memo } from "react";
 import { gsap } from "gsap";
 
 const TextType = ({
@@ -29,8 +29,20 @@ const TextType = ({
     const [isDeleting, setIsDeleting] = useState(false);
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
     const [isVisible, setIsVisible] = useState(!startOnVisible);
+    const [isLowPerformance, setIsLowPerformance] = useState(false);
     const cursorRef = useRef(null);
     const containerRef = useRef(null);
+    
+    // Detect low-performance devices
+    useEffect(() => {
+        const checkPerformance = () => {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const isLowEnd = isMobile || window.innerWidth < 768;
+            setIsLowPerformance(isLowEnd);
+        };
+        
+        checkPerformance();
+    }, []);
 
     const textArray = Array.isArray(text) ? text : [text];
 
@@ -66,15 +78,17 @@ const TextType = ({
     useEffect(() => {
         if (showCursor && cursorRef.current) {
             gsap.set(cursorRef.current, { opacity: 1 });
+            
+            // Optimize cursor animation for low-performance devices
             gsap.to(cursorRef.current, {
                 opacity: 0,
-                duration: cursorBlinkDuration,
+                duration: isLowPerformance ? cursorBlinkDuration * 1.5 : cursorBlinkDuration,
                 repeat: -1,
                 yoyo: true,
-                ease: "power2.inOut",
+                ease: isLowPerformance ? "power1.inOut" : "power2.inOut", // Simpler easing for low-performance devices
             });
         }
-    }, [showCursor, cursorBlinkDuration]);
+    }, [showCursor, cursorBlinkDuration, isLowPerformance]);
 
     useEffect(() => {
         if (!isVisible) return;
@@ -87,6 +101,14 @@ const TextType = ({
             : currentText;
 
         const executeTypingAnimation = () => {
+            // Adjust speeds based on device performance
+            const adjustedTypingSpeed = isLowPerformance ? typingSpeed * 1.5 : typingSpeed;
+            const adjustedDeletingSpeed = isLowPerformance ? deletingSpeed * 1.5 : deletingSpeed;
+            const adjustedPauseDuration = isLowPerformance ? pauseDuration * 0.7 : pauseDuration;
+            
+            // On low-performance devices, we might skip some characters to improve performance
+            const skipChars = isLowPerformance && processedText.length > 20 ? 2 : 1;
+            
             if (isDeleting) {
                 if (displayedText === "") {
                     setIsDeleting(false);
@@ -100,27 +122,39 @@ const TextType = ({
 
                     setCurrentTextIndex((prev) => (prev + 1) % textArray.length);
                     setCurrentCharIndex(0);
-                    timeout = setTimeout(() => { }, pauseDuration);
+                    timeout = setTimeout(() => { }, adjustedPauseDuration);
                 } else {
                     timeout = setTimeout(() => {
-                        setDisplayedText((prev) => prev.slice(0, -1));
-                    }, deletingSpeed);
+                        // Delete multiple characters at once on low-performance devices
+                        const charsToDelete = isLowPerformance ? Math.min(2, displayedText.length) : 1;
+                        setDisplayedText((prev) => prev.slice(0, -charsToDelete));
+                    }, adjustedDeletingSpeed);
                 }
             } else {
                 if (currentCharIndex < processedText.length) {
                     timeout = setTimeout(
                         () => {
-                            setDisplayedText(
-                                (prev) => prev + processedText[currentCharIndex]
+                            // Add multiple characters at once on low-performance devices
+                            const remainingChars = processedText.length - currentCharIndex;
+                            const charsToAdd = isLowPerformance ? 
+                                Math.min(skipChars, remainingChars) : 1;
+                            
+                            const newChars = processedText.substring(
+                                currentCharIndex, 
+                                currentCharIndex + charsToAdd
                             );
-                            setCurrentCharIndex((prev) => prev + 1);
+                            
+                            setDisplayedText((prev) => prev + newChars);
+                            setCurrentCharIndex((prev) => prev + charsToAdd);
                         },
-                        variableSpeed ? getRandomSpeed() : typingSpeed
+                        variableSpeed ? 
+                            (isLowPerformance ? getRandomSpeed() * 1.2 : getRandomSpeed()) : 
+                            adjustedTypingSpeed
                     );
                 } else if (textArray.length > 1) {
                     timeout = setTimeout(() => {
                         setIsDeleting(true);
-                    }, pauseDuration);
+                    }, adjustedPauseDuration);
                 }
             }
         };
@@ -175,4 +209,5 @@ const TextType = ({
     );
 };
 
-export default TextType;
+// Export memoized component to prevent unnecessary re-renders
+export default memo(TextType);
