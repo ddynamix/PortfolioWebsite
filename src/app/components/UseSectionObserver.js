@@ -12,7 +12,10 @@ export default function useSectionObserver(sectionName) {
                     setCurrentSection(sectionName);
                 }
             },
-            { threshold: 0 } // Adjust based on when you want it to trigger
+            {
+                threshold: 0,
+                rootMargin: '50% 0px 50% 0px'
+            }
         );
         if (ref.current) {
             observer.observe(ref.current);

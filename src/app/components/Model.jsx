@@ -1,13 +1,8 @@
 import * as THREE from 'three'
-import {Canvas, useFrame} from '@react-three/fiber'
+import {useFrame} from '@react-three/fiber'
 import {
     MeshTransmissionMaterial,
     useGLTF,
-    AccumulativeShadows,
-    RandomizedLight,
-    Environment,
-    OrbitControls,
-    Center,
 } from '@react-three/drei'
 import {useRef, useState, useEffect} from "react";
 

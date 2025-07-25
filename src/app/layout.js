@@ -8,6 +8,19 @@ const inter = Inter({subsets: ['latin']});
 export const metadata = {
     title: 'Tyler Steptoe',
     description: 'Portfolio of Tyler Steptoe, a software developer based in Toronto.',
+    openGraph: {
+        images: [
+            {
+                url: 'https://tylersteptoe.com/images/Thumbnail.png',
+                width: 1200,
+                height: 630,
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        images: ['https://tylersteptoe.com/images/Thumbnail.png'],
+    },
 };
 
 export default function RootLayout({children}) {

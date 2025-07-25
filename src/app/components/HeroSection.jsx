@@ -9,10 +9,7 @@ import TextType from './ReactBits/TextType';
 import CircularText from './ReactBits/CircularText';
 
 // Lazy load the Scene component
-const Scene = dynamic(() => import('./Scene'), {
-    ssr: false,
-    loading: () => <div className="w-full h-full flex items-center justify-center">Loading...</div>
-});
+const Scene = dynamic(() => import('./cnScene'));
 
 function Hero() {
     const ref = useSectionObserver('hero');
@@ -32,7 +29,7 @@ function Hero() {
 
     return (
         <section ref={ref} className={'relative bg-white'}>
-            <div className="relative overflow-hidden w-screen h-screen z-10">
+            <div className="relative overflow-hidden w-screen max-h-screen z-10">
                 <motion.div
                     className="flex w-[200vw] h-full"
                     animate={{x: showAbout ? "-100vw" : "0vw"}}
@@ -41,8 +38,13 @@ function Hero() {
                         ease: isLowPerformance ? "easeInOut" : [0.65, 0, 0.35, 1]
                     }}
                 >
-                    <section id="hero" className="w-screen h-full flex flex-col justify-between pt-20 sm:pt-30">
-                        <div className="flex flex-col md:flex-row justify-between px-6 sm:px-10 md:px-20">
+                    <section id="hero" className="relative w-screen h-full flex flex-col justify-between pt-20 sm:pt-30">
+                        {/* 3D Scene Background - Full Height */}
+                        <div className="absolute inset-0 top-0 left-1/2 transform -translate-x-1/2 sm:-translate-x-1/10 w-[90%] sm:w-[60%] h-full z-0 pointer-events-auto">
+                            <Scene />
+                        </div>
+
+                        <div className="relative z-10 flex flex-col md:flex-row justify-between px-6 sm:px-10 md:px-20">
                             {/* Left Side: Text Content */}
                             <div className="text-left flex flex-col h-full w-full">
                                 <p className="text-base sm:text-lg text-black mb-4 sm:mb-10">Hello! My name is</p>
@@ -72,13 +74,13 @@ function Hero() {
                                 </div>
                             </div>
 
-                            {/* Right Side: ThreeJS Content */}
-                            <div className="flex w-full max-h-full items-center md:-mr-12 pt-0 md:pt-16">
-                                <Scene/>
+                            {/* Right Side: Empty space for 3D content (now in background) */}
+                            <div className="relative w-full max-h-full items-center md:-mr-12 pt-0 pointer-events-none md:pt-16">
+                                {/* This div just provides spacing - the 3D scene is positioned absolutely */}
                             </div>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row w-full items-center sm:items-end justify-between gap-6 sm:gap-0 mb-10 sm:mb-20 md:mb-35 px-6 sm:px-10 md:px-20">
+                        <div className="relative z-10 flex flex-col sm:flex-row w-full items-center sm:items-end justify-between gap-6 sm:gap-0 mb-10 sm:mb-20 md:mb-35 px-6 sm:px-10 md:px-20">
                             <p className="text-base sm:text-lg text-black max-w-md cursor-pointer hover:underline text-center sm:text-left"
                                onClick={() => setShowAbout(true)}>
                                 I am a software developer based in Toronto. I love Hackathons, design, and
@@ -101,20 +103,20 @@ function Hero() {
                             <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
                                 {/* Back Arrow */}
-                                <p className="inline-block mb-2 text-black cursor-pointer hover:underline text-xl sm:text-2xl"
+                                <p className="inline-block mb-2 text-black cursor-pointer hover:underline text-3xl md:text-xl sm:text-2xl mt-10 md:mt-5"
                                    onClick={() => setShowAbout(false)}>
                                     &larr; {/* Left arrow character */}
                                 </p>
 
-                                <div className="flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16">
+                                <div className="flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16 min-h-fit h-screen lg:h-auto overflow-hidden lg:overflow-visible">
                                     {/* Left Column: Text Content */}
-                                    <div className="lg:w-3/5">
+                                    <div className="lg:w-3/5 flex flex-col overflow-hidden lg:overflow-visible">
                                         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-black mb-6 sm:mb-10">
                                             Tyler Steptoe
                                         </h1>
 
-                                        {/* Paragraphs from the image */}
-                                        <div className="space-y-4 sm:space-y-6 text-sm sm:text-base text-black leading-relaxed">
+                                        {/* Paragraphs */}
+                                        <div className="space-y-4 sm:space-y-6 text-sm sm:text-base text-black leading-relaxed overflow-y-auto lg:overflow-visible flex-1 pr-2">
                                             <p>
                                                 How's it going? I&apos;m currently a 4th year student at the
                                                 University of Toronto studying Computer Science and Cognitive Science.
@@ -161,7 +163,7 @@ function Hero() {
                                                    target="_blank"
                                                    rel="noopener noreferrer"
                                                    className="text-blue-600 hover:underline">
-                                                     CV
+                                                    CV
                                                 </a>.
                                             </p>
                                             <blockquote
@@ -179,8 +181,7 @@ function Hero() {
                                     </div>
 
                                     {/* Right Column: Skill Wheels */}
-                                    <div
-                                        className="lg:w-1/3 flex items-center flex-col justify-center mt-10 lg:mt-0 text-black">
+                                    <div className="hidden sm:flex lg:w-1/3 items-center flex-col justify-center mt-10 lg:mt-0 text-black flex-shrink-0">
                                         <div className="flex items-start justify-start sm:mr-20 md:mr-40 -mb-4 sm:-mb-10">
                                             <CircularText
                                                 text="PYTHON*C*JAVA*ASM*R*JS*TS*"
@@ -210,7 +211,7 @@ function Hero() {
                                 </div>
                             </div>
                         </section>
-                                    </section>
+                    </section>
                 </motion.div>
             </div>
         </section>

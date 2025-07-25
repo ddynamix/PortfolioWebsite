@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense, lazy } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment } from "@react-three/drei"
 import Image from 'next/image'
+import { AsciiRenderer } from "@react-three/drei";
 
 // Lazy load the 3D model component
 const Model = lazy(() => import('./Model'))
