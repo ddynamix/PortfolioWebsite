@@ -14,7 +14,6 @@ export default function useSectionObserver(sectionName) {
             },
             {
                 threshold: 0,
-                rootMargin: '50% 0px 50% 0px'
             }
         );
         if (ref.current) {

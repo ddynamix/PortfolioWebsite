@@ -31,7 +31,7 @@ function Hero() {
         <section ref={ref} className={'relative bg-white'}>
             <div className="relative overflow-hidden w-screen max-h-screen z-10">
                 <motion.div
-                    className="flex w-[200vw] h-full"
+                    className="flex w-[200vw] h-screen"
                     animate={{x: showAbout ? "-100vw" : "0vw"}}
                     transition={{
                         duration: isLowPerformance ? 0.4 : 0.6,
@@ -40,7 +40,7 @@ function Hero() {
                 >
                     <section id="hero" className="relative w-screen h-full flex flex-col justify-between pt-20 sm:pt-30">
                         {/* 3D Scene Background - Full Height */}
-                        <div className="absolute inset-0 top-0 left-1/2 transform -translate-x-1/2 sm:-translate-x-1/10 w-[90%] sm:w-[60%] h-full z-0 pointer-events-auto">
+                        <div className="absolute inset-0 top-0 left-1/2 transform -translate-x-1/2 sm:-translate-x-1/10 w-[90%] sm:w-[60%] h-screen z-0 pointer-events-none sm:pointer-events-auto ">
                             <Scene />
                         </div>
 
@@ -116,7 +116,7 @@ function Hero() {
                                         </h1>
 
                                         {/* Paragraphs */}
-                                        <div className="space-y-4 sm:space-y-6 text-sm sm:text-base text-black leading-relaxed overflow-y-auto lg:overflow-visible flex-1 pr-2">
+                                        <div className="space-y-4 sm:space-y-6 text-xs md:text-sm sm:text-base text-black leading-relaxed overflow-y-auto lg:overflow-visible flex-1 pr-2">
                                             <p>
                                                 How's it going? I&apos;m currently a 4th year student at the
                                                 University of Toronto studying Computer Science and Cognitive Science.
